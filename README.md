@@ -13,6 +13,7 @@ und Facebook, die der Besucher selbst anklickt).
 ```
 index.html            # die komplette Seite (Markup + Styles inline)
 assets/fonts/*.woff2  # Karla + Libre Caslon Text (latin / latin-ext)
+assets/img/*.jpg      # 15 Beispielbilder (CC0/Public Domain, siehe IMAGE-CREDITS.md)
 ```
 
 ## Lokal ansehen
@@ -34,12 +35,21 @@ Hero → Öffnungszeiten → Feinkost aus Italien (Antipasti, Formaggi, Salumi,
 Pasta & Sughi, Olio & Aceto, Vino) → Caffè & Frisches vom Tag →
 Events & private Feiern → Besuch / Anfahrt → Footer.
 
+## Bilder austauschen
+
+Die 15 Bilder sind **Beispielbilder aus gemeinfreien Quellen**, keine Fotos des
+echten Ladens (Nachweise in `IMAGE-CREDITS.md`). Zum Austauschen genügt es, die
+Datei unter `assets/img/<id>.jpg` durch ein eigenes Foto **mit gleichem Namen**
+zu ersetzen — das Markup muss nicht angefasst werden. Die IDs entsprechen den
+Bildflächen (`hero-bg`, `feinkost-antipasti`, `caffe-img`, `insta-1` …).
+
+Sinnvolle Größen: Hero ~1800 px breit, Karten ~900 px, Instagram-Kacheln ~600 px.
+
 ## Offene Punkte
 
-- **Keine echten Bilder.** Alle 16 Bildflächen sind Platzhalter (gestrichelter
-  Rahmen + Beschreibung, z. B. „Antipasti-Auswahl in Gläsern"). Zum Einsetzen
-  eines Fotos den jeweiligen `<div class="img-ph" id="…">` durch ein
-  `<img>` mit denselben Maßen ersetzen.
+- **`location-map` ist weiterhin ein Platzhalter** (gestrichelter Rahmen). Dort
+  gehört ein Kartenausschnitt oder ein Foto der Lousbergstraße hin — ein
+  beliebiges fremdes Straßenfoto wäre an dieser Stelle irreführend.
 - **Kein `<title>`**, keine Meta-Description, keine OG-Tags, kein
   strukturiertes Datenmarkup (`LocalBusiness`). Für die Auffindbarkeit bei
   Google ist das der wichtigste offene Punkt.
