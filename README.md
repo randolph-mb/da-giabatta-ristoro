@@ -3,33 +3,30 @@
 Statische One-Pager-Website für das italienische Café / Feinkostgeschäft
 **Da Giabatta Ristoro**, Lousbergstraße 66, 52072 Aachen.
 
-Lokale Kopie des Claude-Artifacts
-`https://claude.ai/code/artifact/f5fde1e8-1c3c-4cb4-810e-5604ca980a3a`,
-entpackt am 2026-08-15. Alle Assets sind lokal — **keine externen Requests
-zur Laufzeit**, kein Build-Step, kein Backend.
+Reines HTML + CSS: **kein JavaScript, kein Build-Step, kein Backend.**
+Alle Assets liegen im Repo — zur Laufzeit gehen keine Requests an fremde
+Server (die einzigen externen URLs sind die Links zu Google Maps, Instagram
+und Facebook, die der Besucher selbst anklickt).
 
 ## Struktur
 
 ```
-index.html                  # die komplette Seite (Markup + 3 inline <style>-Blöcke)
-assets/js/dc-runtime.js     # Claude-Design-Composer-Runtime (rendert <x-dc>)
-assets/js/image-slot.js     # <image-slot> Custom Element (Bild-Platzhalter)
-assets/fonts/*.woff2        # Karla + Libre Caslon Text (latin / latin-ext)
-vendor/react*.min.js        # React 18.3.1 UMD, von der Runtime nachgeladen
+index.html            # die komplette Seite (Markup + Styles inline)
+assets/fonts/*.woff2  # Karla + Libre Caslon Text (latin / latin-ext)
 ```
-
-`index.html` beginnt mit einem injizierten `window.__resources`-Mapping, das
-die Runtime auf die lokalen React-Dateien in `vendor/` zeigen lässt. Ohne das
-würde sie React von unpkg.com holen (Original-Verhalten im Artifact-Bundle).
 
 ## Lokal ansehen
 
-`index.html` einfach im Browser öffnen — funktioniert auch per Doppelklick
-(`file://`, getestet). Für einen realistischeren Test:
+`index.html` im Browser öffnen — Doppelklick genügt. Alternativ:
 
 ```bash
 npx serve .          # oder: python -m http.server 8000
 ```
+
+## Deployment
+
+GitHub Pages, Quelle `main` / root. **Jeder Push auf `main` geht live** —
+keine Workflow-Datei nötig, Pages baut direkt aus dem Branch.
 
 ## Inhalt der Seite
 
@@ -37,12 +34,14 @@ Hero → Öffnungszeiten → Feinkost aus Italien (Antipasti, Formaggi, Salumi,
 Pasta & Sughi, Olio & Aceto, Vino) → Caffè & Frisches vom Tag →
 Events & private Feiern → Besuch / Anfahrt → Footer.
 
-## Bekannte offene Punkte
+## Offene Punkte
 
-- **Keine echten Bilder.** Alle Bildflächen sind leere `<image-slot>`-
-  Platzhalter (gestrichelte Kästen mit Beschriftung, z. B. „Antipasti-Auswahl
-  in Gläsern"). Echte Fotos müssen noch eingesetzt werden.
-- **Kein Formular.** „Anfrage senden" ist ein `mailto:info@daristoro.de` —
-  Event-Anfragen laufen also über den Mail-Client des Besuchers.
+- **Keine echten Bilder.** Alle 16 Bildflächen sind Platzhalter (gestrichelter
+  Rahmen + Beschreibung, z. B. „Antipasti-Auswahl in Gläsern"). Zum Einsetzen
+  eines Fotos den jeweiligen `<div class="img-ph" id="…">` durch ein
+  `<img>` mit denselben Maßen ersetzen.
+- **Kein `<title>`**, keine Meta-Description, keine OG-Tags, kein
+  strukturiertes Datenmarkup (`LocalBusiness`). Für die Auffindbarkeit bei
+  Google ist das der wichtigste offene Punkt.
+- **Kein Formular.** „Anfrage senden" ist ein `mailto:info@daristoro.de`.
 - Der Facebook-Link zeigt auf `https://facebook.com` (keine konkrete Seite).
-- Unten rechts blendet die Runtime ein „Made with Claude Design"-Badge ein.

@@ -1,15 +1,53 @@
 <!DOCTYPE html>
-<html><head>
-<script>window.__resources = {"https://unpkg.com/react@18.3.1/umd/react.production.min.js":"vendor/react.production.min.js","https://unpkg.com/react-dom@18.3.1/umd/react-dom.production.min.js":"vendor/react-dom.production.min.js"};</script>
+<html><head><style>
+    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
+      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
+      border-radius:2px;box-sizing:border-box;overflow:hidden}
+    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
+    html.sc-dc-streaming .sc-placeholder,
+    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
+      background:color-mix(in srgb,currentColor 5%,transparent);
+      border-color:transparent}
+    html.sc-dc-streaming .sc-placeholder::before,
+    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
+      position:absolute;inset:0;pointer-events:none;
+      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
+      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
+    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
+    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
+      background:color-mix(in srgb,currentColor 8%,transparent)}
+    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
+      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
+    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
+      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
+      border-radius:2px;box-sizing:border-box;color:transparent;
+      user-select:none}
+    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
+      color:color-mix(in srgb,currentColor 50%,transparent);
+      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
+      padding:0 3px}
+    .sc-host.sc-has-error{position:relative}
+    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
+      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
+      border-radius:4px;white-space:pre-wrap;pointer-events:none}
+    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
+       in sync until dc-runtime regains a build step. */
+    @media print {
+      @page { margin: 0.5cm; }
+      figure, table { break-inside: avoid; }
+      #dc-root, #dc-root > .sc-host { height: auto; }
+      *, *::before, *::after {
+        print-color-adjust: exact; -webkit-print-color-adjust: exact;
+        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
+        animation-delay: -99s !important; animation-duration: .001s !important;
+        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
+        animation-play-state: running !important; transition-duration: 0s !important;
+      }
+    }
+  </style>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<script src="assets/js/dc-runtime.js"></script>
-</head>
-<body>
-<x-dc>
-<helmet>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <style>/* latin-ext */
+<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style><style>/* latin-ext */
 @font-face {
   font-family: 'Karla';
   font-style: normal;
@@ -135,46 +173,83 @@
   src: url("assets/fonts/libre-caslon-text-700-latin-383637.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-</style>
-  <script src="assets/js/image-slot.js"></script>
-  <style>
+</style><style>
     body { margin: 0; background: oklch(97% 0.015 75); }
     a { color: oklch(35% 0.14 25); text-decoration: none; }
     a:hover { color: oklch(45% 0.15 25); }
     ::selection { background: oklch(80% 0.08 40); }
-  </style>
-</helmet>
+  </style><style>
+.img-ph {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 2;
+  background: rgba(127, 127, 127, .08);
+  border-radius: var(--ph-radius, 0px);
+  font: 13px/1.3 system-ui, -apple-system, sans-serif;
+}
+.img-ph::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: 1.5px dashed currentColor;
+  border-radius: inherit;
+  opacity: .35;
+  pointer-events: none;
+}
+.img-ph-body {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  text-align: center;
+  padding: 12px;
+  box-sizing: border-box;
+}
+.img-ph-body svg { opacity: .45; flex: none; }
+.img-ph-cap {
+  max-width: 90%;
+  font-weight: 500;
+  letter-spacing: .01em;
+  opacity: .75;
+}
+</style>
+</head>
+<body>
+<div id="dc-root"><div class="sc-host" data-sc-name="index"><div style="font-family: Karla, sans-serif; background: oklch(0.97 0.015 75); color: oklch(0.22 0.02 50); overflow-x: hidden;">
 
-<div style="font-family: 'Karla', sans-serif; background: oklch(97% 0.015 75); color: oklch(22% 0.02 50); overflow-x: hidden;">
-
-  <!-- NAV -->
-  <div style="position: sticky; top: 0; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px clamp(20px, 4vw, 64px); background: oklch(97% 0.015 75 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid oklch(85% 0.02 60);">
-    <div style="font-family: 'Libre Caslon Text', serif; font-size: clamp(18px, 2vw, 22px); letter-spacing: 0.02em;">Da Giabatta Ristoro</div>
+  
+  <div style="position: sticky; top: 0px; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px clamp(20px, 4vw, 64px); background: oklch(0.97 0.015 75 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid oklch(0.85 0.02 60);">
+    <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(18px, 2vw, 22px); letter-spacing: 0.02em;">Da Giabatta Ristoro</div>
     <div style="display: flex; gap: clamp(14px, 3vw, 32px); font-size: 14px; font-weight: 600; letter-spacing: 0.03em;">
-      <a href="#feinkost" style="color: oklch(22% 0.02 50);">Feinkost</a>
-      <a href="#events" style="color: oklch(22% 0.02 50); display: none;" class="nav-hide-mobile">Events</a>
-      <a href="#location" style="color: oklch(22% 0.02 50);">Besuch</a>
+      <a href="#feinkost" style="color: oklch(0.22 0.02 50);">Feinkost</a>
+      <a href="#events" class="nav-hide-mobile" style="color: oklch(0.22 0.02 50); display: none;">Events</a>
+      <a href="#location" style="color: oklch(0.22 0.02 50);">Besuch</a>
     </div>
   </div>
 
-  <!-- HERO -->
+  
   <div style="position: relative; height: min(90vh, 780px); min-height: 520px; width: 100%;">
-    <image-slot id="hero-bg" shape="rect" placeholder="Hero-Foto: Ladentheke mit Antipasti, warmes Licht"></image-slot>
-    <div style="position: absolute; inset: 0; background: linear-gradient(180deg, oklch(15% 0.03 40 / 0.35) 0%, oklch(12% 0.03 40 / 0.75) 100%); pointer-events: none;"></div>
-    <div style="position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; pointer-events: none;">
-      <div style="font-family: 'Libre Caslon Text', serif; font-style: italic; color: oklch(94% 0.02 75); font-size: clamp(14px, 1.6vw, 18px); letter-spacing: 0.08em; margin-bottom: 14px;">Benvenuti a tavola</div>
-      <h1 style="font-family: 'Libre Caslon Text', serif; color: oklch(98% 0.01 75); font-size: clamp(44px, 8vw, 112px); line-height: 1.02; margin: 0 0 18px; font-weight: 400; text-wrap: balance;">Da Giabatta<br>Ristoro</h1>
-      <p style="color: oklch(94% 0.02 75); font-size: clamp(16px, 2vw, 20px); max-width: 520px; line-height: 1.5; margin: 0 0 36px;">Italienische Feinkost, frischer Kaffee und ehrliche Küche mitten in Aachen.</p>
+    <div class="img-ph" id="hero-bg" style="--ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Hero-Foto: Ladentheke mit Antipasti, warmes Licht</div></div></div>
+    <div style="position: absolute; inset: 0px; background: linear-gradient(oklch(0.15 0.03 40 / 0.35) 0%, oklch(0.12 0.03 40 / 0.75) 100%); pointer-events: none;"></div>
+    <div style="position: absolute; inset: 0px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; pointer-events: none;">
+      <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-style: italic; color: oklch(0.94 0.02 75); font-size: clamp(14px, 1.6vw, 18px); letter-spacing: 0.08em; margin-bottom: 14px;">Benvenuti a tavola</div>
+      <h1 style="font-family: &quot;Libre Caslon Text&quot;, serif; color: oklch(0.98 0.01 75); font-size: clamp(44px, 8vw, 112px); line-height: 1.02; margin: 0px 0px 18px; font-weight: 400; text-wrap: balance;">Da Giabatta<br>Ristoro</h1>
+      <p style="color: oklch(0.94 0.02 75); font-size: clamp(16px, 2vw, 20px); max-width: 520px; line-height: 1.5; margin: 0px 0px 36px;">Italienische Feinkost, frischer Kaffee und ehrliche Küche mitten in Aachen.</p>
       <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; pointer-events: auto;">
-        <a href="#feinkost" style="background: oklch(35% 0.14 25); color: oklch(98% 0.01 75); padding: 15px 30px; border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em;">Feinkost entdecken</a>
-        <a href="#location" style="background: transparent; color: oklch(98% 0.01 75); padding: 15px 30px; border: 1.5px solid oklch(98% 0.01 75 / 0.8); border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em;">Besuch planen</a>
+        <a href="#feinkost" style="background: oklch(0.35 0.14 25); color: oklch(0.98 0.01 75); padding: 15px 30px; border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em;">Feinkost entdecken</a>
+        <a href="#location" style="background: transparent; color: oklch(0.98 0.01 75); padding: 15px 30px; border: 1.5px solid oklch(0.98 0.01 75 / 0.8); border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em;">Besuch planen</a>
       </div>
     </div>
   </div>
 
-  <!-- OPENING HOURS -->
-  <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; justify-content: center; padding: clamp(36px, 5vw, 56px) clamp(20px, 4vw, 64px); background: oklch(97% 0.015 75); color: oklch(22% 0.02 50); border-bottom: 1px solid oklch(88% 0.02 60); border-top: 1px solid oklch(88% 0.02 60);">
-    <div style="font-family: 'Libre Caslon Text', serif; font-size: clamp(20px, 2.2vw, 26px); font-style: italic; color: oklch(35% 0.14 25);">Öffnungszeiten</div>
+  
+  <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; justify-content: center; padding: clamp(36px, 5vw, 56px) clamp(20px, 4vw, 64px); background: oklch(0.97 0.015 75); color: oklch(0.22 0.02 50); border-bottom: 1px solid oklch(0.88 0.02 60); border-top: 1px solid oklch(0.88 0.02 60);">
+    <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(20px, 2.2vw, 26px); font-style: italic; color: oklch(0.35 0.14 25);">Öffnungszeiten</div>
     <div style="display: flex; flex-wrap: wrap; gap: clamp(24px, 5vw, 56px); font-size: 15px;">
       <div><span style="opacity: 0.6;">Montag &amp; Dienstag</span><br><span style="font-weight: 700; font-size: 17px;">Geschlossen</span></div>
       <div><span style="opacity: 0.6;">Mittwoch – Samstag</span><br><span style="font-weight: 700; font-size: 17px;">11:00 – 18:00 Uhr</span></div>
@@ -182,142 +257,130 @@
     </div>
   </div>
 
-  <!-- FEINKOST -->
-  <div id="feinkost" style="padding: clamp(56px, 8vw, 110px) clamp(20px, 4vw, 64px); max-width: 1280px; margin: 0 auto;">
-    <div style="text-align: center; max-width: 620px; margin: 0 auto 56px;">
-      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(62% 0.13 40); margin-bottom: 12px;">Zum Mitnehmen</div>
-      <h2 style="font-family: 'Libre Caslon Text', serif; font-size: clamp(30px, 4vw, 44px); font-weight: 400; margin: 0 0 16px;">Feinkost aus Italien</h2>
-      <p style="color: oklch(40% 0.02 50); font-size: 16px; line-height: 1.6;">Sorgfältig ausgewählte Delikatessen — direkt aus Italien für Ihre Speisekammer zuhause.</p>
+  
+  <div id="feinkost" style="padding: clamp(56px, 8vw, 110px) clamp(20px, 4vw, 64px); max-width: 1280px; margin: 0px auto;">
+    <div style="text-align: center; max-width: 620px; margin: 0px auto 56px;">
+      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.62 0.13 40); margin-bottom: 12px;">Zum Mitnehmen</div>
+      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(30px, 4vw, 44px); font-weight: 400; margin: 0px 0px 16px;">Feinkost aus Italien</h2>
+      <p style="color: oklch(0.4 0.02 50); font-size: 16px; line-height: 1.6;">Sorgfältig ausgewählte Delikatessen — direkt aus Italien für Ihre Speisekammer zuhause.</p>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(20px, 3vw, 32px);">
       <div style="grid-column: span 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(20px, 3vw, 32px); align-items: end;">
-        <image-slot id="feinkost-antipasti" shape="rounded" radius="4" style="width: 100%; height: 100%; min-height: 320px;" placeholder="Antipasti-Auswahl in Gläsern"></image-slot>
+        <div class="img-ph" id="feinkost-antipasti" style="width: 100%; height: 100%; min-height: 320px;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Antipasti-Auswahl in Gläsern</div></div></div>
         <div>
-          <div style="font-family: 'Libre Caslon Text', serif; font-size: 26px; margin-top: 16px;">Antipasti</div>
-          <div style="color: oklch(40% 0.02 50); font-size: 15px; margin-top: 8px; line-height: 1.6;">Eingelegtes Gemüse, Oliven und Artischocken — unsere Klassiker zum Auftakt jeder Tafel.</div>
+          <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 26px; margin-top: 16px;">Antipasti</div>
+          <div style="color: oklch(0.4 0.02 50); font-size: 15px; margin-top: 8px; line-height: 1.6;">Eingelegtes Gemüse, Oliven und Artischocken — unsere Klassiker zum Auftakt jeder Tafel.</div>
         </div>
       </div>
       <div>
-        <image-slot id="feinkost-formaggi" shape="rounded" radius="4" style="width: 100%; aspect-ratio: 4/5;" placeholder="Käseauswahl auf Holzbrett"></image-slot>
-        <div style="font-family: 'Libre Caslon Text', serif; font-size: 19px; margin-top: 16px;">Formaggi</div>
-        <div style="color: oklch(40% 0.02 50); font-size: 14px; margin-top: 4px;">Parmigiano, Pecorino, Burrata</div>
+        <div class="img-ph" id="feinkost-formaggi" style="width: 100%; aspect-ratio: 4 / 5;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Käseauswahl auf Holzbrett</div></div></div>
+        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Formaggi</div>
+        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Parmigiano, Pecorino, Burrata</div>
       </div>
       <div>
-        <image-slot id="feinkost-salumi" shape="rounded" radius="4" style="width: 100%; aspect-ratio: 4/5;" placeholder="Aufgeschnittene Salami und Schinken"></image-slot>
-        <div style="font-family: 'Libre Caslon Text', serif; font-size: 19px; margin-top: 16px;">Salumi</div>
-        <div style="color: oklch(40% 0.02 50); font-size: 14px; margin-top: 4px;">Parmaschinken, Salame, Mortadella</div>
+        <div class="img-ph" id="feinkost-salumi" style="width: 100%; aspect-ratio: 4 / 5;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Aufgeschnittene Salami und Schinken</div></div></div>
+        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Salumi</div>
+        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Parmaschinken, Salame, Mortadella</div>
       </div>
       <div>
-        <image-slot id="feinkost-pasta" shape="rounded" radius="4" style="width: 100%; aspect-ratio: 4/5;" placeholder="Pasta und Sugo-Gläser im Regal"></image-slot>
-        <div style="font-family: 'Libre Caslon Text', serif; font-size: 19px; margin-top: 16px;">Pasta &amp; Sughi</div>
-        <div style="color: oklch(40% 0.02 50); font-size: 14px; margin-top: 4px;">Frische Pasta, hausgemachte Saucen</div>
+        <div class="img-ph" id="feinkost-pasta" style="width: 100%; aspect-ratio: 4 / 5;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Pasta und Sugo-Gläser im Regal</div></div></div>
+        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Pasta &amp; Sughi</div>
+        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Frische Pasta, hausgemachte Saucen</div>
       </div>
       <div>
-        <image-slot id="feinkost-olio" shape="rounded" radius="4" style="width: 100%; aspect-ratio: 4/5;" placeholder="Olivenöl- und Essigflaschen"></image-slot>
-        <div style="font-family: 'Libre Caslon Text', serif; font-size: 19px; margin-top: 16px;">Olio &amp; Aceto</div>
-        <div style="color: oklch(40% 0.02 50); font-size: 14px; margin-top: 4px;">Olivenöl, Balsamico, Trüffelprodukte</div>
+        <div class="img-ph" id="feinkost-olio" style="width: 100%; aspect-ratio: 4 / 5;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Olivenöl- und Essigflaschen</div></div></div>
+        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Olio &amp; Aceto</div>
+        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Olivenöl, Balsamico, Trüffelprodukte</div>
       </div>
       <div>
-        <image-slot id="feinkost-vino" shape="rounded" radius="4" style="width: 100%; aspect-ratio: 4/5;" placeholder="Weinflaschen im Regal"></image-slot>
-        <div style="font-family: 'Libre Caslon Text', serif; font-size: 19px; margin-top: 16px;">Vino</div>
-        <div style="color: oklch(40% 0.02 50); font-size: 14px; margin-top: 4px;">Italienische Weine, kleine Weingüter</div>
+        <div class="img-ph" id="feinkost-vino" style="width: 100%; aspect-ratio: 4 / 5;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Weinflaschen im Regal</div></div></div>
+        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Vino</div>
+        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Italienische Weine, kleine Weingüter</div>
       </div>
     </div>
   </div>
 
-  <!-- CAFFÈ -->
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items: stretch; background: oklch(93% 0.02 60);">
+  
+  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items: stretch; background: oklch(0.93 0.02 60);">
     <div style="min-height: 420px;">
-      <image-slot id="caffe-img" shape="rect" placeholder="Cappuccino und Cornetto auf Marmortisch"></image-slot>
+      <div class="img-ph" id="caffe-img" style="--ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Cappuccino und Cornetto auf Marmortisch</div></div></div>
     </div>
     <div style="display: flex; flex-direction: column; justify-content: center; padding: clamp(40px, 6vw, 88px);">
-      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(62% 0.13 40); margin-bottom: 12px;">Jeden Tag frisch</div>
-      <h2 style="font-family: 'Libre Caslon Text', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0 0 20px;">Caffè &amp; Frisches vom Tag</h2>
-      <p style="color: oklch(35% 0.02 50); font-size: 16px; line-height: 1.7; margin: 0 0 16px; max-width: 460px;">Ein Espresso an der Theke, ein Cappuccino im Sitzen — bei uns beginnt der Tag italienisch. Dazu täglich wechselnde Frische: hausgemachte Panini, Focaccia und kleine Süßspeisen.</p>
-      <p style="color: oklch(35% 0.02 50); font-size: 16px; line-height: 1.7; margin: 0 0 20px;">Was frisch ist, hängt vom Tag ab — kommen Sie vorbei und lassen Sie sich überraschen.</p>
-      <div style="font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 15px; color: oklch(62% 0.13 40); border-left: 2px solid oklch(62% 0.13 40); padding-left: 14px;">Geöffnet Mi – Sa 11–18 Uhr, So 14–18 Uhr</div>
+      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.62 0.13 40); margin-bottom: 12px;">Jeden Tag frisch</div>
+      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0px 0px 20px;">Caffè &amp; Frisches vom Tag</h2>
+      <p style="color: oklch(0.35 0.02 50); font-size: 16px; line-height: 1.7; margin: 0px 0px 16px; max-width: 460px;">Ein Espresso an der Theke, ein Cappuccino im Sitzen — bei uns beginnt der Tag italienisch. Dazu täglich wechselnde Frische: hausgemachte Panini, Focaccia und kleine Süßspeisen.</p>
+      <p style="color: oklch(0.35 0.02 50); font-size: 16px; line-height: 1.7; margin: 0px 0px 20px;">Was frisch ist, hängt vom Tag ab — kommen Sie vorbei und lassen Sie sich überraschen.</p>
+      <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-style: italic; font-size: 15px; color: oklch(0.62 0.13 40); border-left: 2px solid oklch(0.62 0.13 40); padding-left: 14px;">Geöffnet Mi – Sa 11–18 Uhr, So 14–18 Uhr</div>
     </div>
   </div>
 
-  <!-- EVENTS -->
+  
   <div id="events" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items: stretch;">
     <div style="display: flex; flex-direction: column; justify-content: center; padding: clamp(40px, 6vw, 88px); order: 2;">
-      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(62% 0.13 40); margin-bottom: 12px;">Für besondere Anlässe</div>
-      <h2 style="font-family: 'Libre Caslon Text', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0 0 20px;">Events &amp; private Feiern</h2>
-      <p style="color: oklch(35% 0.02 50); font-size: 16px; line-height: 1.7; margin: 0 0 28px; max-width: 460px;">Ob Geburtstag, Firmenfeier oder Familienfest — unser ganzes Café steht Ihnen exklusiv zur Verfügung. Wir kümmern uns um Ambiente und Verpflegung, italienisch und persönlich.</p>
-      <a href="mailto:info@daristoro.de" style="align-self: flex-start; background: oklch(35% 0.14 25); color: oklch(98% 0.01 75); padding: 15px 30px; border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em; margin-bottom: 20px;">Anfrage senden</a>
-      <div style="font-family: 'Libre Caslon Text', serif; font-style: italic; font-size: 15px; color: oklch(45% 0.06 120); border-left: 2px solid oklch(45% 0.06 120); padding-left: 14px;">Platz für bis zu 40 Gäste</div>
+      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.62 0.13 40); margin-bottom: 12px;">Für besondere Anlässe</div>
+      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0px 0px 20px;">Events &amp; private Feiern</h2>
+      <p style="color: oklch(0.35 0.02 50); font-size: 16px; line-height: 1.7; margin: 0px 0px 28px; max-width: 460px;">Ob Geburtstag, Firmenfeier oder Familienfest — unser ganzes Café steht Ihnen exklusiv zur Verfügung. Wir kümmern uns um Ambiente und Verpflegung, italienisch und persönlich.</p>
+      <a href="mailto:info@daristoro.de" style="align-self: flex-start; background: oklch(0.35 0.14 25); color: oklch(0.98 0.01 75); padding: 15px 30px; border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em; margin-bottom: 20px;">Anfrage senden</a>
+      <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-style: italic; font-size: 15px; color: oklch(0.45 0.06 120); border-left: 2px solid oklch(0.45 0.06 120); padding-left: 14px;">Platz für bis zu 40 Gäste</div>
     </div>
     <div style="min-height: 420px; order: 1;">
-      <image-slot id="events-img" shape="rect" placeholder="Gedeckte lange Tafel für private Feier"></image-slot>
+      <div class="img-ph" id="events-img" style="--ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Gedeckte lange Tafel für private Feier</div></div></div>
     </div>
   </div>
 
-  <!-- LOCATION -->
-  <div id="location" style="padding: clamp(56px, 8vw, 110px) clamp(20px, 4vw, 64px); background: oklch(22% 0.02 50); color: oklch(96% 0.015 75);">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(32px, 6vw, 64px); max-width: 1280px; margin: 0 auto; align-items: center;">
+  
+  <div id="location" style="padding: clamp(56px, 8vw, 110px) clamp(20px, 4vw, 64px); background: oklch(0.22 0.02 50); color: oklch(0.96 0.015 75);">
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(32px, 6vw, 64px); max-width: 1280px; margin: 0px auto; align-items: center;">
       <div>
-        <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(72% 0.1 40); margin-bottom: 12px;">Besuchen Sie uns</div>
-        <h2 style="font-family: 'Libre Caslon Text', serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0 0 24px;">In Aachen zu finden</h2>
-        <p style="font-size: 17px; line-height: 1.7; margin: 0 0 8px;">Lousbergstraße 66<br>52072 Aachen</p>
-        <p style="font-size: 15px; line-height: 1.7; opacity: 0.75; margin: 0 0 28px;">Mi – Sa: 11:00 – 18:00 Uhr<br>So: 14:00 – 18:00 Uhr<br>Mo &amp; Di: geschlossen</p>
-        <a href="https://maps.google.com/?q=Lousbergstra%C3%9Fe+66,+52072+Aachen" target="_blank" rel="noopener" style="color: oklch(85% 0.06 40); font-weight: 600; font-size: 15px;">Route planen →</a>
+        <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.72 0.1 40); margin-bottom: 12px;">Besuchen Sie uns</div>
+        <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0px 0px 24px;">In Aachen zu finden</h2>
+        <p style="font-size: 17px; line-height: 1.7; margin: 0px 0px 8px;">Lousbergstraße 66<br>52072 Aachen</p>
+        <p style="font-size: 15px; line-height: 1.7; opacity: 0.75; margin: 0px 0px 28px;">Mi – Sa: 11:00 – 18:00 Uhr<br>So: 14:00 – 18:00 Uhr<br>Mo &amp; Di: geschlossen</p>
+        <a href="https://maps.google.com/?q=Lousbergstra%C3%9Fe+66,+52072+Aachen" target="_blank" rel="noopener" style="color: oklch(0.85 0.06 40); font-weight: 600; font-size: 15px;">Route planen →</a>
       </div>
-      <image-slot id="location-map" shape="rounded" radius="4" style="width: 100%; aspect-ratio: 4/3;" placeholder="Kartenausschnitt / Straßenansicht Lousbergstraße"></image-slot>
+      <div class="img-ph" id="location-map" style="width: 100%; aspect-ratio: 4 / 3;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Kartenausschnitt / Straßenansicht Lousbergstraße</div></div></div>
     </div>
   </div>
 
-  <!-- INSTAGRAM -->
-  <div style="padding: clamp(56px, 7vw, 88px) clamp(20px, 4vw, 64px); max-width: 1280px; margin: 0 auto;">
+  
+  <div style="padding: clamp(56px, 7vw, 88px) clamp(20px, 4vw, 64px); max-width: 1280px; margin: 0px auto;">
     <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 32px;">
-      <h2 style="font-family: 'Libre Caslon Text', serif; font-size: clamp(24px, 3vw, 32px); font-weight: 400; margin: 0;">Auf Instagram</h2>
+      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(24px, 3vw, 32px); font-weight: 400; margin: 0px;">Auf Instagram</h2>
       <a href="https://instagram.com/da_giabatta_ristoro" style="font-weight: 600; font-size: 15px;">@da_giabatta_ristoro</a>
     </div>
     <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
-      <image-slot id="insta-1" shape="rect" style="width: 100%; aspect-ratio: 1/1;" placeholder="Insta-Foto"></image-slot>
-      <image-slot id="insta-2" shape="rect" style="width: 100%; aspect-ratio: 1/1;" placeholder="Insta-Foto"></image-slot>
-      <image-slot id="insta-3" shape="rect" style="width: 100%; aspect-ratio: 1/1;" placeholder="Insta-Foto"></image-slot>
-      <image-slot id="insta-4" shape="rect" style="width: 100%; aspect-ratio: 1/1;" placeholder="Insta-Foto"></image-slot>
-      <image-slot id="insta-5" shape="rect" style="width: 100%; aspect-ratio: 1/1;" placeholder="Insta-Foto"></image-slot>
-      <image-slot id="insta-6" shape="rect" style="width: 100%; aspect-ratio: 1/1;" placeholder="Insta-Foto"></image-slot>
+      <div class="img-ph" id="insta-1" style="width: 100%; aspect-ratio: 1 / 1;; --ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Insta-Foto</div></div></div>
+      <div class="img-ph" id="insta-2" style="width: 100%; aspect-ratio: 1 / 1;; --ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Insta-Foto</div></div></div>
+      <div class="img-ph" id="insta-3" style="width: 100%; aspect-ratio: 1 / 1;; --ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Insta-Foto</div></div></div>
+      <div class="img-ph" id="insta-4" style="width: 100%; aspect-ratio: 1 / 1;; --ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Insta-Foto</div></div></div>
+      <div class="img-ph" id="insta-5" style="width: 100%; aspect-ratio: 1 / 1;; --ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Insta-Foto</div></div></div>
+      <div class="img-ph" id="insta-6" style="width: 100%; aspect-ratio: 1 / 1;; --ph-radius:0px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Insta-Foto</div></div></div>
     </div>
   </div>
 
-  <!-- FOOTER -->
-  <div style="background: oklch(18% 0.02 40); color: oklch(90% 0.015 75); padding: clamp(40px, 6vw, 64px) clamp(20px, 4vw, 64px) 28px;">
-    <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; max-width: 1280px; margin: 0 auto 32px;">
+  
+  <div style="background: oklch(0.18 0.02 40); color: oklch(0.9 0.015 75); padding: clamp(40px, 6vw, 64px) clamp(20px, 4vw, 64px) 28px;">
+    <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; max-width: 1280px; margin: 0px auto 32px;">
       <div>
-        <div style="font-family: 'Libre Caslon Text', serif; font-size: 22px; margin-bottom: 12px;">Da Giabatta Ristoro</div>
+        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 22px; margin-bottom: 12px;">Da Giabatta Ristoro</div>
         <div style="font-size: 14px; opacity: 0.7; line-height: 1.7;">Lousbergstraße 66<br>52072 Aachen</div>
       </div>
       <div>
         <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: 10px;">Kontakt</div>
         <div style="font-size: 14px; line-height: 1.9;">
-          <a href="mailto:info@daristoro.de" style="color: oklch(90% 0.015 75);">info@daristoro.de</a>
+          <a href="mailto:info@daristoro.de" style="color: oklch(0.9 0.015 75);">info@daristoro.de</a>
         </div>
       </div>
       <div>
         <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: 10px;">Social</div>
         <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
-          <a href="https://instagram.com/da_giabatta_ristoro" style="color: oklch(90% 0.015 75);">Instagram</a>
-          <a href="https://facebook.com" style="color: oklch(90% 0.015 75);">Facebook</a>
+          <a href="https://instagram.com/da_giabatta_ristoro" style="color: oklch(0.9 0.015 75);">Instagram</a>
+          <a href="https://facebook.com" style="color: oklch(0.9 0.015 75);">Facebook</a>
         </div>
       </div>
     </div>
-    <div style="text-align: center; font-size: 13px; opacity: 0.5; padding-top: 20px; border-top: 1px solid oklch(30% 0.02 40);">© 2026 Da Giabatta Ristoro — Aachen</div>
-  </div>
-
-</div>
-
-</x-dc>
+    <div style="text-align: center; font-size: 13px; opacity: 0.5; padding-top: 20px; border-top: 1px solid oklch(0.3 0.02 40);">© 2026 Da Giabatta Ristoro — Aachen</div>
+  </div></div></div></div>
 
 
-<div id="__claude_design_branding"><style>#__claude_design_branding{position:fixed;right:16px;bottom:16px;z-index:2147483646;display:flex;align-items:center;gap:7px;height:30px;padding:0 5px 0 10px;border-radius:999px;font-family:"Anthropic Sans",-apple-system,BlinkMacSystemFont,system-ui,sans-serif;font-size:12.5px;font-weight:400;line-height:1;letter-spacing:normal;text-transform:none;color:#141413;background:rgba(255,255,255,.86);-webkit-backdrop-filter:blur(24px);backdrop-filter:blur(24px);box-shadow:0 0 0 .5px rgba(31,30,29,.14),0 2px 10px rgba(0,0,0,.09)}
-#__claude_design_branding *{box-sizing:border-box;margin:0}
-#__claude_design_branding a{color:inherit;text-decoration:none;display:inline-flex;align-items:center;gap:7px;white-space:nowrap}
-#__claude_design_branding a:hover span{text-decoration:underline}
-#__claude_design_branding svg{flex:none}
-#__claude_design_branding a svg{color:#D97757}
-#__claude_design_branding button{width:20px;height:20px;padding:0;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;color:currentColor;opacity:.55;border:0;background:none;cursor:pointer;flex:none;font:inherit;transition:opacity .14s}
-#__claude_design_branding button:hover{opacity:1;background:rgba(127,127,127,.22)}
-@media print{#__claude_design_branding{display:none}}</style><a href="https://claude.com/product/design" target="_blank" rel="noopener noreferrer"><svg width="14" height="14" viewBox="0 0 20 21" fill="none" aria-hidden="true"><path fill="currentColor" d="M9.99902 0C15.5258 0.000170936 19.999 4.50643 19.999 10.0547C19.999 11.7656 19.5863 12.9976 18.7861 13.8203C17.9924 14.6362 16.9465 14.9138 15.9854 15.0078C15.05 15.0993 14.0097 15.0262 13.2549 15.0186C12.8524 15.0145 12.5177 15.0267 12.2441 15.0703C11.9682 15.1144 11.8143 15.1813 11.7305 15.2432C11.4745 15.4322 11.3353 15.7121 11.2656 16.1602C11.2303 16.3875 11.2168 16.6362 11.209 16.9131C11.2017 17.1715 11.1986 17.4893 11.1807 17.7705C11.1469 18.2975 11.0495 19.0865 10.4199 19.5908C9.7846 20.0996 8.88652 20.1057 7.85449 19.877C7.36399 19.7682 6.88652 19.6232 6.42578 19.4453C2.66989 17.9949 0.000187748 14.3414 0 10.0547C0 4.50643 4.47223 0.000171048 9.99902 0ZM9.99902 1.60547C5.36781 1.60564 1.60547 5.38391 1.60547 10.0547C1.60566 13.6582 3.84823 16.7296 7.00391 17.9482C7.39027 18.0974 7.79085 18.2184 8.20215 18.3096C9.1375 18.5169 9.384 18.3633 9.41602 18.3379C9.4524 18.3087 9.54558 18.1915 9.5791 17.668C9.5947 17.4239 9.59473 17.1786 9.60352 16.8672C9.61179 16.5742 9.62831 16.2435 9.67969 15.9131C9.78359 15.2455 10.0474 14.4906 10.7764 13.9521C11.1479 13.6778 11.5842 13.5493 11.9912 13.4844C12.4007 13.4191 12.8434 13.4088 13.2705 13.4131C14.1753 13.4222 15.0071 13.4905 15.8291 13.4102C16.6257 13.3322 17.2249 13.1235 17.6357 12.7012C18.0401 12.2855 18.3935 11.5261 18.3936 10.0547C18.3936 5.38391 14.6302 1.60564 9.99902 1.60547ZM5.11621 9.86719C5.86386 9.91468 6.45486 10.5348 6.45508 11.2939C6.45506 12.0838 5.81519 12.7245 5.02539 12.7246C4.28481 12.7246 3.67573 12.1617 3.60254 11.4404L3.59473 11.2939L3.60156 11.1533C3.66942 10.4596 4.23282 9.91186 4.93359 9.86719H5.11621ZM14.9814 7.19141C15.729 7.23889 16.3199 7.85919 16.3203 8.61816C16.3203 9.40801 15.6804 10.0487 14.8906 10.0488C14.1501 10.0487 13.5409 9.48586 13.4678 8.76465L13.46 8.61816L13.4668 8.47754C13.5348 7.78403 14.0983 7.23618 14.7988 7.19141H14.9814ZM6.4541 4.93457C7.20161 4.9822 7.79275 5.60231 7.79297 6.36133C7.79288 7.151 7.15291 7.7917 6.36328 7.79199C5.62274 7.79199 5.01369 7.22903 4.94043 6.50781L4.93262 6.36133L4.93945 6.2207C5.00731 5.52698 5.5707 4.97922 6.27148 4.93457H6.4541ZM11.3867 3.59668C12.1343 3.64419 12.7253 4.26436 12.7256 5.02344C12.7256 5.81326 12.0857 6.45393 11.2959 6.4541C10.5553 6.4541 9.94622 5.89123 9.87305 5.16992L9.86523 5.02344L9.87207 4.88281C9.93996 4.18912 10.5033 3.64133 11.2041 3.59668H11.3867Z"></path></svg><span>Made with Claude Design</span></a><button type="button" aria-label="Dismiss" onclick="this.parentElement.remove()"><svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true"><path d="M2 2l8 8M10 2l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"></path></svg></button></div></body></html>
+</body></html>
