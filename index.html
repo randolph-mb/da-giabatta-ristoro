@@ -227,6 +227,11 @@
   object-fit: cover;
   background: rgba(127, 127, 127, .08);
 }
+/* Cards that carry their own aspect-ratio must size from it, not from the
+   grid row: with height:100% the row locked to the image height and the
+   caption below it spilled out of the section (visible as "Vino" running
+   into the next band on phones). */
+.img-photo[style*="aspect-ratio"] { height: auto; }
 @media (max-width: 860px) {
   [style*="grid-column: span 2"] { grid-column: 1 / -1 !important; }
   [style*="minmax(360px"],
