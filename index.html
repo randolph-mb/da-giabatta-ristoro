@@ -1,53 +1,14 @@
 <!DOCTYPE html>
-<html><head><style>
-    .sc-placeholder{background:color-mix(in srgb,currentColor 8%,transparent);
-      border:1px solid color-mix(in srgb,currentColor 50%,transparent);
-      border-radius:2px;box-sizing:border-box;overflow:hidden}
-    @keyframes sc-shine{0%{background-position:100% 50%}100%{background-position:0% 50%}}
-    html.sc-dc-streaming .sc-placeholder,
-    html.sc-dc-streaming .sc-interp.sc-missing{position:relative;
-      background:color-mix(in srgb,currentColor 5%,transparent);
-      border-color:transparent}
-    html.sc-dc-streaming .sc-placeholder::before,
-    html.sc-dc-streaming .sc-interp.sc-missing::before{content:'';
-      position:absolute;inset:0;pointer-events:none;
-      background:linear-gradient(90deg,rgba(217,119,87,0) 25%,rgba(247,225,211,.95) 37%,rgba(217,119,87,0) 63%);
-      background-size:400% 100%;animation:sc-shine 1.4s ease infinite}
-    html.sc-dc-streaming .sc-placeholder:nth-child(n+9 of .sc-placeholder)::before,
-    html.sc-dc-streaming .sc-interp.sc-missing:nth-child(n+9 of .sc-interp.sc-missing)::before{animation:none;
-      background:color-mix(in srgb,currentColor 8%,transparent)}
-    .sc-placeholder-error{padding:4px 8px;font:11px/1.4 ui-monospace,monospace;
-      color:color-mix(in srgb,currentColor 70%,transparent);word-break:break-word}
-    .sc-interp.sc-missing{display:inline-block;width:2em;height:1em;overflow:hidden;
-      vertical-align:text-bottom;background:rgba(255,255,255,.3);border:1px solid rgba(0,0,0,.5);
-      border-radius:2px;box-sizing:border-box;color:transparent;
-      user-select:none}
-    .sc-interp.sc-unresolved{font-family:ui-monospace,monospace;font-size:.85em;
-      color:color-mix(in srgb,currentColor 50%,transparent);
-      background:color-mix(in srgb,currentColor 10%,transparent);border-radius:3px;
-      padding:0 3px}
-    .sc-host.sc-has-error{position:relative}
-    .sc-logic-error{position:absolute;top:8px;left:8px;z-index:2147483647;max-width:60ch;
-      padding:6px 10px;background:#b00020;color:#fff;font:12px/1.4 ui-monospace,monospace;
-      border-radius:4px;white-space:pre-wrap;pointer-events:none}
-    /* Mirrors PRINT_BASELINE_CSS in apps/web deck-stage-export.ts — keep both
-       in sync until dc-runtime regains a build step. */
-    @media print {
-      @page { margin: 0.5cm; }
-      figure, table { break-inside: avoid; }
-      #dc-root, #dc-root > .sc-host { height: auto; }
-      *, *::before, *::after {
-        print-color-adjust: exact; -webkit-print-color-adjust: exact;
-        backdrop-filter: none !important; -webkit-backdrop-filter: none !important;
-        animation-delay: -99s !important; animation-duration: .001s !important;
-        animation-iteration-count: 1 !important; animation-fill-mode: both !important;
-        animation-play-state: running !important; transition-duration: 0s !important;
-      }
-    }
-  </style>
+<html lang="de">
+<head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<style>html,body{height:100%;margin:0}#dc-root,#dc-root>.sc-host{height:100%}</style><style>/* latin-ext */
+<title>Da Giabatta Ristoro — Projekt pausiert</title>
+<meta name="description" content="Das Projekt Da Giabatta Ristoro ist derzeit pausiert.">
+<meta name="robots" content="noindex, follow">
+<link rel="icon" href="data:,">
+<style>
+/* latin-ext */
 @font-face {
   font-family: 'Karla';
   font-style: normal;
@@ -61,42 +22,6 @@
   font-family: 'Karla';
   font-style: normal;
   font-weight: 400;
-  font-display: swap;
-  src: url("assets/fonts/karla-400-latin-578aed.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Karla';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("assets/fonts/karla-400-latin-ext-8f4aa6.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Karla';
-  font-style: normal;
-  font-weight: 500;
-  font-display: swap;
-  src: url("assets/fonts/karla-400-latin-578aed.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Karla';
-  font-style: normal;
-  font-weight: 600;
-  font-display: swap;
-  src: url("assets/fonts/karla-400-latin-ext-8f4aa6.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Karla';
-  font-style: normal;
-  font-weight: 600;
   font-display: swap;
   src: url("assets/fonts/karla-400-latin-578aed.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
@@ -117,24 +42,6 @@
   font-weight: 700;
   font-display: swap;
   src: url("assets/fonts/karla-400-latin-578aed.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-/* latin-ext */
-@font-face {
-  font-family: 'Libre Caslon Text';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("assets/fonts/libre-caslon-text-400-latin-ext-1f8129.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
-}
-/* latin */
-@font-face {
-  font-family: 'Libre Caslon Text';
-  font-style: italic;
-  font-weight: 400;
-  font-display: swap;
-  src: url("assets/fonts/libre-caslon-text-400-latin-ad0d7f.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
 /* latin-ext */
@@ -155,258 +62,121 @@
   src: url("assets/fonts/libre-caslon-text-400-latin-f37c35.woff2") format('woff2');
   unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
 }
-/* latin-ext */
-@font-face {
-  font-family: 'Libre Caslon Text';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("assets/fonts/libre-caslon-text-700-latin-ext-7f0eba.woff2") format('woff2');
-  unicode-range: U+0100-02BA, U+02BD-02C5, U+02C7-02CC, U+02CE-02D7, U+02DD-02FF, U+0304, U+0308, U+0329, U+1D00-1DBF, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF;
+
+:root {
+  --paper:   oklch(0.97 0.015 75);
+  --ink:     oklch(0.22 0.02 50);
+  --accent:  oklch(0.35 0.14 25);
+  --muted:   oklch(0.62 0.13 40);
+  --hairline: oklch(0.88 0.02 60);
 }
-/* latin */
-@font-face {
-  font-family: 'Libre Caslon Text';
-  font-style: normal;
-  font-weight: 700;
-  font-display: swap;
-  src: url("assets/fonts/libre-caslon-text-700-latin-383637.woff2") format('woff2');
-  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
-}
-</style><style>
-    body { margin: 0; background: oklch(97% 0.015 75); }
-    a { color: oklch(35% 0.14 25); text-decoration: none; }
-    a:hover { color: oklch(45% 0.15 25); }
-    ::selection { background: oklch(80% 0.08 40); }
-  </style><style>
-.img-ph {
-  position: relative;
-  display: block;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 3 / 2;
-  background: rgba(127, 127, 127, .08);
-  border-radius: var(--ph-radius, 0px);
-  font: 13px/1.3 system-ui, -apple-system, sans-serif;
-}
-.img-ph::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  border: 1.5px dashed currentColor;
-  border-radius: inherit;
-  opacity: .35;
-  pointer-events: none;
-}
-.img-ph-body {
-  position: absolute;
-  inset: 0;
+
+* { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: Karla, sans-serif;
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  padding: clamp(28px, 6vw, 64px);
   text-align: center;
-  padding: 12px;
-  box-sizing: border-box;
 }
-.img-ph-body svg { opacity: .45; flex: none; }
-.img-ph-cap {
-  max-width: 90%;
-  font-weight: 500;
-  letter-spacing: .01em;
-  opacity: .75;
+
+main {
+  max-width: 46ch;
+  animation: rise .7s ease-out both;
 }
-</style>
-<style>
-.img-photo {
+
+@keyframes rise {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: none; }
+}
+
+.brand {
+  font-family: 'Libre Caslon Text', serif;
+  font-size: clamp(16px, 2vw, 20px);
+  letter-spacing: 0.02em;
+  margin: 0 0 clamp(28px, 6vw, 44px);
+}
+
+.eyebrow {
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--muted);
+  margin: 0 0 14px;
+}
+
+h1 {
+  font-family: 'Libre Caslon Text', serif;
+  font-weight: 400;
+  font-size: clamp(34px, 6vw, 60px);
+  line-height: 1.1;
+  margin: 0 0 20px;
+  text-wrap: balance;
+}
+
+p {
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.65;
+  margin: 0 auto 14px;
+}
+
+.en {
+  font-size: 15px;
+  opacity: 0.62;
+  margin-top: 20px;
+}
+
+hr {
+  border: 0;
+  border-top: 1px solid var(--hairline);
+  width: 64px;
+  margin: clamp(30px, 5vw, 44px) auto;
+}
+
+footer {
+  font-size: 14px;
+  opacity: 0.62;
+  line-height: 1.7;
+}
+
+.rule {
   display: block;
-  width: 100%;
-  height: 100%;
-  aspect-ratio: 3 / 2;
-  object-fit: cover;
-  background: rgba(127, 127, 127, .08);
+  width: 40px;
+  height: 2px;
+  background: var(--accent);
+  margin: 0 auto 26px;
 }
-/* Cards that carry their own aspect-ratio must size from it, not from the
-   grid row: with height:100% the row locked to the image height and the
-   caption below it spilled out of the section (visible as "Vino" running
-   into the next band on phones). */
-.img-photo[style*="aspect-ratio"] { height: auto; }
-@media (max-width: 860px) {
-  [style*="grid-column: span 2"] { grid-column: 1 / -1 !important; }
-  [style*="minmax(360px"],
-  [style*="minmax(320px"],
-  [style*="minmax(280px"],
-  [style*="minmax(260px"] { grid-template-columns: 1fr !important; }
-}
-@media (max-width: 560px) {
-  .img-photo, .img-ph { aspect-ratio: 4 / 3; }
-  [style*="aspect-ratio: 4 / 5"] { aspect-ratio: 4 / 3 !important; }
+
+@media (prefers-reduced-motion: reduce) {
+  main { animation: none; }
 }
 </style>
 </head>
 <body>
-<div id="dc-root"><div class="sc-host" data-sc-name="index"><div style="font-family: Karla, sans-serif; background: oklch(0.97 0.015 75); color: oklch(0.22 0.02 50); overflow-x: hidden;">
+  <main>
+    <div class="brand">Da Giabatta Ristoro</div>
 
-  
-  <div style="position: sticky; top: 0px; z-index: 50; display: flex; align-items: center; justify-content: space-between; padding: 18px clamp(20px, 4vw, 64px); background: oklch(0.97 0.015 75 / 0.92); backdrop-filter: blur(8px); border-bottom: 1px solid oklch(0.85 0.02 60);">
-    <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(18px, 2vw, 22px); letter-spacing: 0.02em;">Da Giabatta Ristoro</div>
-    <div style="display: flex; gap: clamp(14px, 3vw, 32px); font-size: 14px; font-weight: 600; letter-spacing: 0.03em;">
-      <a href="#feinkost" style="color: oklch(0.22 0.02 50);">Feinkost</a>
-      <a href="#events" class="nav-hide-mobile" style="color: oklch(0.22 0.02 50); display: none;">Events</a>
-      <a href="#location" style="color: oklch(0.22 0.02 50);">Besuch</a>
-    </div>
-  </div>
+    <span class="rule"></span>
+    <p class="eyebrow">Hinweis</p>
+    <h1>Dieses Projekt&nbsp;wurde pausiert.</h1>
 
-  
-  <div style="position: relative; height: min(90vh, 780px); min-height: 520px; width: 100%;">
-    <img class="img-photo" id="hero-bg" src="assets/img/hero-bg.jpg" alt="Hero-Foto: Ladentheke mit Antipasti, warmes Licht" style="border-radius: 0px">
-    <div style="position: absolute; inset: 0px; background: linear-gradient(oklch(0.15 0.03 40 / 0.35) 0%, oklch(0.12 0.03 40 / 0.75) 100%); pointer-events: none;"></div>
-    <div style="position: absolute; inset: 0px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 24px; pointer-events: none;">
-      <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-style: italic; color: oklch(0.94 0.02 75); font-size: clamp(14px, 1.6vw, 18px); letter-spacing: 0.08em; margin-bottom: 14px;">Benvenuti a tavola</div>
-      <h1 style="font-family: &quot;Libre Caslon Text&quot;, serif; color: oklch(0.98 0.01 75); font-size: clamp(44px, 8vw, 112px); line-height: 1.02; margin: 0px 0px 18px; font-weight: 400; text-wrap: balance;">Da Giabatta<br>Ristoro</h1>
-      <p style="color: oklch(0.94 0.02 75); font-size: clamp(16px, 2vw, 20px); max-width: 520px; line-height: 1.5; margin: 0px 0px 36px;">Italienische Feinkost, frischer Kaffee und ehrliche Küche mitten in Aachen.</p>
-      <div style="display: flex; gap: 16px; flex-wrap: wrap; justify-content: center; pointer-events: auto;">
-        <a href="#feinkost" style="background: oklch(0.35 0.14 25); color: oklch(0.98 0.01 75); padding: 15px 30px; border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em;">Feinkost entdecken</a>
-        <a href="#location" style="background: transparent; color: oklch(0.98 0.01 75); padding: 15px 30px; border: 1.5px solid oklch(0.98 0.01 75 / 0.8); border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em;">Besuch planen</a>
-      </div>
-    </div>
-  </div>
+    <p>Die Website ist derzeit nicht verfügbar. Wir melden uns, sobald es weitergeht.</p>
 
-  
-  <div style="display: flex; flex-wrap: wrap; gap: 40px; align-items: center; justify-content: center; padding: clamp(36px, 5vw, 56px) clamp(20px, 4vw, 64px); background: oklch(0.97 0.015 75); color: oklch(0.22 0.02 50); border-bottom: 1px solid oklch(0.88 0.02 60); border-top: 1px solid oklch(0.88 0.02 60);">
-    <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(20px, 2.2vw, 26px); font-style: italic; color: oklch(0.35 0.14 25);">Öffnungszeiten</div>
-    <div style="display: flex; flex-wrap: wrap; gap: clamp(24px, 5vw, 56px); font-size: 15px;">
-      <div><span style="opacity: 0.6;">Montag &amp; Dienstag</span><br><span style="font-weight: 700; font-size: 17px;">Geschlossen</span></div>
-      <div><span style="opacity: 0.6;">Mittwoch – Samstag</span><br><span style="font-weight: 700; font-size: 17px;">11:00 – 18:00 Uhr</span></div>
-      <div><span style="opacity: 0.6;">Sonntag</span><br><span style="font-weight: 700; font-size: 17px;">14:00 – 18:00 Uhr</span></div>
-    </div>
-  </div>
+    <p class="en" lang="en">This project is currently paused. The site is temporarily unavailable.</p>
 
-  
-  <div id="feinkost" style="padding: clamp(56px, 8vw, 110px) clamp(20px, 4vw, 64px); max-width: 1280px; margin: 0px auto;">
-    <div style="text-align: center; max-width: 620px; margin: 0px auto 56px;">
-      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.62 0.13 40); margin-bottom: 12px;">Zum Mitnehmen</div>
-      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(30px, 4vw, 44px); font-weight: 400; margin: 0px 0px 16px;">Feinkost aus Italien</h2>
-      <p style="color: oklch(0.4 0.02 50); font-size: 16px; line-height: 1.6;">Sorgfältig ausgewählte Delikatessen — direkt aus Italien für Ihre Speisekammer zuhause.</p>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: clamp(20px, 3vw, 32px);">
-      <div style="grid-column: span 2; display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: clamp(20px, 3vw, 32px); align-items: end;">
-        <img class="img-photo" id="feinkost-antipasti" src="assets/img/feinkost-antipasti.jpg" alt="Antipasti-Auswahl in Gläsern" loading="lazy" decoding="async" style="width: 100%; height: 100%; min-height: 320px; border-radius: 4px">
-        <div>
-          <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 26px; margin-top: 16px;">Antipasti</div>
-          <div style="color: oklch(0.4 0.02 50); font-size: 15px; margin-top: 8px; line-height: 1.6;">Eingelegtes Gemüse, Oliven und Artischocken — unsere Klassiker zum Auftakt jeder Tafel.</div>
-        </div>
-      </div>
-      <div>
-        <img class="img-photo" id="feinkost-formaggi" src="assets/img/feinkost-formaggi.jpg" alt="Käseauswahl auf Holzbrett" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 4 / 5; border-radius: 4px">
-        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Formaggi</div>
-        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Parmigiano, Pecorino, Burrata</div>
-      </div>
-      <div>
-        <img class="img-photo" id="feinkost-salumi" src="assets/img/feinkost-salumi.jpg" alt="Aufgeschnittene Salami und Schinken" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 4 / 5; border-radius: 4px">
-        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Salumi</div>
-        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Parmaschinken, Salame, Mortadella</div>
-      </div>
-      <div>
-        <img class="img-photo" id="feinkost-pasta" src="assets/img/feinkost-pasta.jpg" alt="Pasta und Sugo-Gläser im Regal" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 4 / 5; border-radius: 4px">
-        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Pasta &amp; Sughi</div>
-        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Frische Pasta, hausgemachte Saucen</div>
-      </div>
-      <div>
-        <img class="img-photo" id="feinkost-olio" src="assets/img/feinkost-olio.jpg" alt="Olivenöl- und Essigflaschen" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 4 / 5; border-radius: 4px">
-        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Olio &amp; Aceto</div>
-        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Olivenöl, Balsamico, Trüffelprodukte</div>
-      </div>
-      <div>
-        <img class="img-photo" id="feinkost-vino" src="assets/img/feinkost-vino.jpg" alt="Weinflaschen im Regal" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 4 / 5; border-radius: 4px">
-        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 19px; margin-top: 16px;">Vino</div>
-        <div style="color: oklch(0.4 0.02 50); font-size: 14px; margin-top: 4px;">Italienische Weine, kleine Weingüter</div>
-      </div>
-    </div>
-  </div>
+    <hr>
 
-  
-  <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items: stretch; background: oklch(0.93 0.02 60);">
-    <div style="min-height: 420px;">
-      <img class="img-photo" id="caffe-img" src="assets/img/caffe-img.jpg" alt="Cappuccino und Cornetto auf Marmortisch" loading="lazy" decoding="async" style="border-radius: 0px">
-    </div>
-    <div style="display: flex; flex-direction: column; justify-content: center; padding: clamp(40px, 6vw, 88px);">
-      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.62 0.13 40); margin-bottom: 12px;">Jeden Tag frisch</div>
-      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0px 0px 20px;">Caffè &amp; Frisches vom Tag</h2>
-      <p style="color: oklch(0.35 0.02 50); font-size: 16px; line-height: 1.7; margin: 0px 0px 16px; max-width: 460px;">Ein Espresso an der Theke, ein Cappuccino im Sitzen — bei uns beginnt der Tag italienisch. Dazu täglich wechselnde Frische: hausgemachte Panini, Focaccia und kleine Süßspeisen.</p>
-      <p style="color: oklch(0.35 0.02 50); font-size: 16px; line-height: 1.7; margin: 0px 0px 20px;">Was frisch ist, hängt vom Tag ab — kommen Sie vorbei und lassen Sie sich überraschen.</p>
-      <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-style: italic; font-size: 15px; color: oklch(0.62 0.13 40); border-left: 2px solid oklch(0.62 0.13 40); padding-left: 14px;">Geöffnet Mi – Sa 11–18 Uhr, So 14–18 Uhr</div>
-    </div>
-  </div>
-
-  
-  <div id="events" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(360px, 1fr)); align-items: stretch;">
-    <div style="display: flex; flex-direction: column; justify-content: center; padding: clamp(40px, 6vw, 88px); order: 2;">
-      <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.62 0.13 40); margin-bottom: 12px;">Für besondere Anlässe</div>
-      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0px 0px 20px;">Events &amp; private Feiern</h2>
-      <p style="color: oklch(0.35 0.02 50); font-size: 16px; line-height: 1.7; margin: 0px 0px 28px; max-width: 460px;">Ob Geburtstag, Firmenfeier oder Familienfest — unser ganzes Café steht Ihnen exklusiv zur Verfügung. Wir kümmern uns um Ambiente und Verpflegung, italienisch und persönlich.</p>
-      <a href="mailto:info@daristoro.de" style="align-self: flex-start; background: oklch(0.35 0.14 25); color: oklch(0.98 0.01 75); padding: 15px 30px; border-radius: 2px; font-weight: 600; font-size: 15px; letter-spacing: 0.02em; margin-bottom: 20px;">Anfrage senden</a>
-      <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-style: italic; font-size: 15px; color: oklch(0.45 0.06 120); border-left: 2px solid oklch(0.45 0.06 120); padding-left: 14px;">Platz für bis zu 40 Gäste</div>
-    </div>
-    <div style="min-height: 420px; order: 1;">
-      <img class="img-photo" id="events-img" src="assets/img/events-img.jpg" alt="Gedeckte lange Tafel für private Feier" loading="lazy" decoding="async" style="border-radius: 0px">
-    </div>
-  </div>
-
-  
-  <div id="location" style="padding: clamp(56px, 8vw, 110px) clamp(20px, 4vw, 64px); background: oklch(0.22 0.02 50); color: oklch(0.96 0.015 75);">
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: clamp(32px, 6vw, 64px); max-width: 1280px; margin: 0px auto; align-items: center;">
-      <div>
-        <div style="text-transform: uppercase; letter-spacing: 0.15em; font-size: 13px; font-weight: 700; color: oklch(0.72 0.1 40); margin-bottom: 12px;">Besuchen Sie uns</div>
-        <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(28px, 3.5vw, 40px); font-weight: 400; margin: 0px 0px 24px;">In Aachen zu finden</h2>
-        <p style="font-size: 17px; line-height: 1.7; margin: 0px 0px 8px;">Lousbergstraße 66<br>52072 Aachen</p>
-        <p style="font-size: 15px; line-height: 1.7; opacity: 0.75; margin: 0px 0px 28px;">Mi – Sa: 11:00 – 18:00 Uhr<br>So: 14:00 – 18:00 Uhr<br>Mo &amp; Di: geschlossen</p>
-        <a href="https://maps.google.com/?q=Lousbergstra%C3%9Fe+66,+52072+Aachen" target="_blank" rel="noopener" style="color: oklch(0.85 0.06 40); font-weight: 600; font-size: 15px;">Route planen →</a>
-      </div>
-      <div class="img-ph" id="location-map" style="width: 100%; aspect-ratio: 4 / 3;; --ph-radius:4px"><div class="img-ph-body"><svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/></svg><div class="img-ph-cap">Kartenausschnitt / Straßenansicht Lousbergstraße</div></div></div>
-    </div>
-  </div>
-
-  
-  <div style="padding: clamp(56px, 7vw, 88px) clamp(20px, 4vw, 64px); max-width: 1280px; margin: 0px auto;">
-    <div style="display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 12px; margin-bottom: 32px;">
-      <h2 style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: clamp(24px, 3vw, 32px); font-weight: 400; margin: 0px;">Auf Instagram</h2>
-      <a href="https://instagram.com/da_giabatta_ristoro" style="font-weight: 600; font-size: 15px;">@da_giabatta_ristoro</a>
-    </div>
-    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px;">
-      <img class="img-photo" id="insta-1" src="assets/img/insta-1.jpg" alt="Insta-Foto" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 0px">
-      <img class="img-photo" id="insta-2" src="assets/img/insta-2.jpg" alt="Insta-Foto" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 0px">
-      <img class="img-photo" id="insta-3" src="assets/img/insta-3.jpg" alt="Insta-Foto" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 0px">
-      <img class="img-photo" id="insta-4" src="assets/img/insta-4.jpg" alt="Insta-Foto" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 0px">
-      <img class="img-photo" id="insta-5" src="assets/img/insta-5.jpg" alt="Insta-Foto" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 0px">
-      <img class="img-photo" id="insta-6" src="assets/img/insta-6.jpg" alt="Insta-Foto" loading="lazy" decoding="async" style="width: 100%; aspect-ratio: 1 / 1; border-radius: 0px">
-    </div>
-  </div>
-
-  
-  <div style="background: oklch(0.18 0.02 40); color: oklch(0.9 0.015 75); padding: clamp(40px, 6vw, 64px) clamp(20px, 4vw, 64px) 28px;">
-    <div style="display: flex; flex-wrap: wrap; gap: 40px; justify-content: space-between; max-width: 1280px; margin: 0px auto 32px;">
-      <div>
-        <div style="font-family: &quot;Libre Caslon Text&quot;, serif; font-size: 22px; margin-bottom: 12px;">Da Giabatta Ristoro</div>
-        <div style="font-size: 14px; opacity: 0.7; line-height: 1.7;">Lousbergstraße 66<br>52072 Aachen</div>
-      </div>
-      <div>
-        <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: 10px;">Kontakt</div>
-        <div style="font-size: 14px; line-height: 1.9;">
-          <a href="mailto:info@daristoro.de" style="color: oklch(0.9 0.015 75);">info@daristoro.de</a>
-        </div>
-      </div>
-      <div>
-        <div style="font-size: 13px; text-transform: uppercase; letter-spacing: 0.1em; opacity: 0.6; margin-bottom: 10px;">Social</div>
-        <div style="display: flex; flex-direction: column; gap: 8px; font-size: 14px;">
-          <a href="https://instagram.com/da_giabatta_ristoro" style="color: oklch(0.9 0.015 75);">Instagram</a>
-          <a href="https://facebook.com" style="color: oklch(0.9 0.015 75);">Facebook</a>
-        </div>
-      </div>
-    </div>
-    <div style="text-align: center; font-size: 13px; opacity: 0.5; padding-top: 20px; border-top: 1px solid oklch(0.3 0.02 40);">© 2026 Da Giabatta Ristoro — Aachen</div>
-  </div></div></div></div>
-
-
-</body></html>
+    <footer>
+      Lousbergstraße 66 · 52072 Aachen
+    </footer>
+  </main>
+</body>
+</html>

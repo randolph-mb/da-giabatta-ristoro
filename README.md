@@ -1,5 +1,11 @@
 # Da Giabatta Ristoro — Website
 
+> **Projekt pausiert.** `index.html` zeigt aktuell nur einen Pausen-Hinweis
+> (`noindex`). Die vollständige Seite liegt in der Git-Historie im Commit
+> `a486fb5` und kommt mit
+> `git checkout a486fb5 -- index.html` zurück.
+> Die restliche Doku unten beschreibt diese vollständige Seite.
+
 Statische One-Pager-Website für das italienische Café / Feinkostgeschäft
 **Da Giabatta Ristoro**, Lousbergstraße 66, 52072 Aachen.
 
