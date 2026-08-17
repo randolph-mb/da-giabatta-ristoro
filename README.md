@@ -1,9 +1,15 @@
 # Da Giabatta Ristoro — Website
 
 > **Projekt pausiert.** `index.html` zeigt aktuell nur einen Pausen-Hinweis
-> (`noindex`). Die vollständige Seite liegt in der Git-Historie im Commit
-> `a486fb5` und kommt mit
-> `git checkout a486fb5 -- index.html` zurück.
+> (`noindex`, ohne Name und Adresse). Die vollständige Seite ist **nicht
+> gelöscht** — sie liegt im Commit `a486fb5` und kommt so zurück:
+>
+> ```bash
+> git checkout a486fb5 -- index.html   # alte Seite ins Arbeitsverzeichnis
+> git commit -m "Restore full site"    # ohne commit+push wird sie NICHT live
+> git push origin main                 # Pages deployed in ~30-60 s
+> ```
+>
 > Die restliche Doku unten beschreibt diese vollständige Seite.
 
 Statische One-Pager-Website für das italienische Café / Feinkostgeschäft
